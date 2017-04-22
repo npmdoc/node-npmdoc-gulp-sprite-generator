@@ -1,9 +1,14 @@
-# api documentation for  [gulp-sprite-generator (v0.2.3)](https://github.com/gobwas/gulp-sprite-generator)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-sprite-generator.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-sprite-generator) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-sprite-generator.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-sprite-generator)
+# npmdoc-gulp-sprite-generator
+
+#### api documentation for  [gulp-sprite-generator (v0.2.3)](https://github.com/gobwas/gulp-sprite-generator)  [![npm package](https://img.shields.io/npm/v/npmdoc-gulp-sprite-generator.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-gulp-sprite-generator) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-sprite-generator.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-sprite-generator)
+
 #### Plugin that generate sprites from your stylesheets (using spritesmith) and then updates the references.
 
-[![NPM](https://nodei.co/npm/gulp-sprite-generator.png?downloads=true)](https://www.npmjs.com/package/gulp-sprite-generator)
+[![NPM](https://nodei.co/npm/gulp-sprite-generator.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/gulp-sprite-generator)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-gulp-sprite-generator/build/screenCapture.buildApidoc.browser.%252Fhome%252Ftravis%252Fbuild%252Fnpmdoc%252Fnode-npmdoc-gulp-sprite-generator%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-gulp-sprite-generator/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-gulp-sprite-generator/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-gulp-sprite-generator/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-gulp-sprite-generator/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-gulp-sprite-generator/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-gulp-sprite-generator/build/screenCapture.npmPackageListing.svg)
 
@@ -18,7 +23,6 @@
 {
     "author": {
         "name": "Sergey Kamardin",
-        "email": "gobwas@gmail.com",
         "url": "http://github.com/gobwas"
     },
     "bugs": {
@@ -61,13 +65,11 @@
     "main": "index.js",
     "maintainers": [
         {
-            "name": "gobwas",
-            "email": "gobwas@gmail.com"
+            "name": "gobwas"
         }
     ],
     "name": "gulp-sprite-generator",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/gobwas/gulp-sprite-generator.git"
@@ -76,19 +78,10 @@
         "test": "mocha ./test"
     },
     "test": "mocha test",
-    "version": "0.2.3"
+    "version": "0.2.3",
+    "bin": {}
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module gulp-sprite-generator](#apidoc.module.gulp-sprite-generator)
-
-
-
-# <a name="apidoc.module.gulp-sprite-generator"></a>[module gulp-sprite-generator](#apidoc.module.gulp-sprite-generator)
 
 
 
