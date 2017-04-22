@@ -61,12 +61,161 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-sprite-generator">module gulp-sprite-generator</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sprite-generator.gulp-sprite-generator">
+            function <span class="apidocSignatureSpan"></span>gulp-sprite-generator
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.gulp-sprite-generator" id="apidoc.module.gulp-sprite-generator">module gulp-sprite-generator</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-sprite-generator.gulp-sprite-generator" id="apidoc.element.gulp-sprite-generator.gulp-sprite-generator">
+        function <span class="apidocSignatureSpan"></span>gulp-sprite-generator
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">gulp-sprite-generator = function (options) { &#x27;use strict&#x27;;
+    var stream, styleSheetStream, spriteSheetStream;
+
+    debug = {
+        sprites: 0,
+        images:  0
+    };
+
+    options = _.merge({
+        src:        [],
+        engine:     &#x22;pngsmith&#x22;, //auto
+        algorithm:  &#x22;top-down&#x22;,
+        padding:    0,
+        engineOpts: {},
+        exportOpts: {
+
+        },
+        imgOpts: {
+            timeout: 30000
+        },
+
+        baseUrl:         &#x27;./&#x27;,
+        retina:          true,
+        styleSheetName:  null,
+        spriteSheetName: null,
+        spriteSheetPath: null,
+        filter:          [],
+        groupBy:         [],
+        accumulate:      false,
+        verbose:         false
+    }, options || {});
+
+    // check necessary properties
+    [&#x27;spriteSheetName&#x27;].forEach(function(property) {
+        if (!options[property]) {
+            throw new gutil.PluginError(PLUGIN_NAME, &#x27;`&#x27; + property + &#x27;` is required&#x27;);
+        }
+    });
+
+    // prepare filters
+    if (_.isFunction(options.filter)) {
+        options.filter = [options.filter]
+    }
+
+    // prepare groupers
+    if (_.isFunction(options.groupBy)) {
+        options.groupBy = [options.groupBy]
+    }
+
+    // add meta skip filter
+    options.filter.unshift(function(image) {
+        image.meta.skip &#x26;&#x26; options.verbose &#x26;&#x26; log(image.path + &#x27; has been skipped as it meta declares to skip&#x27;);
+        return !image.meta.skip;
+    });
+
+    // add not existing filter
+    options.filter.push(function(image) {
+        var deferred = Q.defer();
+
+        fs.exists(image.path, function(exists) {
+            !exists &#x26;&#x26; options.verbose &#x26;&#x26; log(image.path + &#x27; has been skipped as it does not exist!&#x27;);
+            deferred.resolve(exists);
+        });
+
+        return deferred.promise;
+    });
+
+    // add retina grouper if needed
+    if (options.retina) {
+        options.groupBy.unshift(function(image) {
+            if (image.isRetina) {
+                return &#x22;@&#x22; + image.retinaRatio + &#x22;x&#x22;;
+            }
+
+            return null;
+        });
+    }
+
+    // create output streams
+    function noop(){}
+    styleSheetStream = new Readable({objectMode: true});
+    spriteSheetStream = new Readable({objectMode: true});
+    spriteSheetStream._read = styleSheetStream._read = noop;
+
+    var accumulatedFiles = [];
+
+    stream = through.obj(
+        function(file, enc, done) {
+            if (file.isNull()) {
+                this.push(file); // Do nothing if no contents
+                return done();
+            }
+
+            if (file.isStream()) {
+                this.emit(&#x27;error&#x27;, new gutil.PluginError(PLUGIN_NAME, &#x27;Streams is not supported!&#x27;));
+                return done();
+            }
+
+            if (file.isBuffer()) {
+                // postpone evaluation, if we accumulating
+                if (options.accumulate) {
+                    accumulatedFiles.push(file);
+                    stream.push(file);
+                    done();
+                    return;
+                }
+
+                getImages(file, options)
+                    .then(function(images) {
+                        callSpriteSmithWith(images, options)
+                            .then(exportSprites(spriteSheetStream, options))
+                            .then(mapSpritesProperties(images, options))
+                            .then(updateReferencesIn(file))
+                            .then(exportStylesheet(styleSheetStream, _.extend({}, options, { styleSheetName: options.styleSheetName
+ || path.basename(file.path) })))
+                            .then(function() {
+                                // pipe source file
+                                stream.push(file);
+                                done();
+                            })
+                            .catch(function(err) {
+                                stream.emit(&#x27;error&#x27;, new gutil.PluginError(PLUGIN_NAME, err));
+                                done();
+                            });
+                    });
+
+
+                return null; ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 
